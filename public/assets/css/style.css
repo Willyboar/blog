@@ -1,0 +1,395 @@
+:root {
+    color: #141621;
+    font-family:
+        "Roboto Mono", "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas,
+        "Liberation Mono", monospace;
+    background-color: #fffef9;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0 auto;
+    max-width: 68ch;
+    padding: 2rem 1.25rem 4rem;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+    color: inherit;
+    background: #fffef9;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+    margin: 0 0 0.4rem;
+    font-weight: 600;
+}
+
+p {
+    margin: 0 0 0.8rem;
+}
+
+hgroup {
+    margin: 0 0 1rem;
+}
+
+hgroup h1 {
+    margin: 0;
+}
+
+.site-header {
+    margin-bottom: 1.5rem;
+}
+
+.site-header h1 {
+    font-size: 1.9rem;
+}
+
+.site-header hgroup p {
+    color: #666;
+}
+
+.site-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    font-size: 1.05rem;
+    letter-spacing: 0.03em;
+}
+
+.site-menu a {
+    position: relative;
+    padding-bottom: 0.1rem;
+}
+
+.site-menu a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.1rem;
+    width: 100%;
+    height: 0.125rem;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.5s ease;
+}
+
+.site-menu a:hover::after,
+.site-menu a:focus-visible::after,
+.site-menu a:active::after {
+    transform: scaleX(1);
+}
+
+.layout main,
+.layout {
+    display: block;
+}
+
+.post-list {
+    margin-top: 1.5rem;
+}
+
+.post-card {
+    margin-bottom: 1.6rem;
+}
+
+.post-card h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.25rem;
+}
+
+.post-meta {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 0.25rem;
+}
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin: 0.4rem 0;
+}
+
+.tag-list a {
+    display: inline-block;
+    padding: 0.2rem 0.85rem;
+    border: 2px solid #090b16;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: #fffdf2;
+    color: #090b16;
+    box-shadow: 3px 3px 0 #090b16;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        color 0.15s ease;
+}
+
+.tag-list a:hover,
+.tag-list a:focus-visible {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 #090b16;
+    color: #090b16;
+}
+
+.tag-list a:focus-visible {
+    outline: 2px solid #93a0ff;
+    outline-offset: 2px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+footer {
+    margin-top: 3rem;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.footer-icons {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.footer-icons img {
+    width: 1.75rem;
+    height: auto;
+    display: block;
+}
+
+/* Sola-inspired Markdown styles */
+pre,
+code,
+kbd,
+samp {
+    font-family:
+        "Roboto Mono", "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas,
+        "Liberation Mono", monospace;
+    font-variant-ligatures: none;
+}
+
+pre {
+    width: 100%;
+    background: #fdfcff;
+    color: #0f1628;
+    padding: 1.1rem 1.25rem;
+    border-radius: 0.45rem;
+    overflow-x: auto;
+    border: 0.1rem solid #05060b;
+    margin: 0 0 1.45rem;
+    box-shadow: 4px 4px 0 #05060b;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+pre code,
+pre samp {
+    display: block;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    white-space: pre;
+}
+
+code,
+kbd,
+samp {
+    display: inline-block;
+    background: #eef1fa;
+    color: #0f1628;
+    padding: 0.2rem 0.45rem;
+    border-radius: 0.4rem;
+    border: 0.1rem solid rgba(9, 16, 40, 0.35);
+    font-size: 0.9rem;
+}
+
+:not(pre) > code {
+    border: 0;
+    background: #05060b;
+    color: #fffef5;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.15rem 0.45rem;
+}
+
+pre code.hljs {
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+code.hljs {
+    background: transparent;
+    border: 0;
+    padding: 0;
+}
+
+.hljs {
+    color: #24292e;
+    background: transparent;
+}
+
+.hljs-comment,
+.hljs-quote,
+.hljs-formula,
+.hljs-code {
+    color: #6a737d;
+    font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-doctag,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-variable.language_,
+.hljs-operator {
+    color: #d73a49;
+    font-weight: 600;
+}
+
+.hljs-built_in,
+.hljs-symbol {
+    color: #e36209;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-literal,
+.hljs-meta,
+.hljs-number,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.function_,
+.hljs-variable {
+    color: #005cc5;
+}
+
+.hljs-string,
+.hljs-meta .hljs-string,
+.hljs-regexp {
+    color: #032f62;
+}
+
+.hljs-name,
+.hljs-quote,
+.hljs-selector-tag,
+.hljs-selector-pseudo {
+    color: #22863a;
+}
+
+.hljs-bullet {
+    color: #735c0f;
+}
+
+.hljs-section,
+.hljs-strong {
+    color: #24292e;
+    font-weight: 700;
+}
+
+.hljs-emphasis {
+    color: #24292e;
+    font-style: italic;
+}
+
+.hljs-addition {
+    color: #22863a;
+    background-color: #f0fff4;
+}
+
+.hljs-deletion {
+    color: #b31d28;
+    background-color: #ffeef0;
+}
+
+kbd {
+    background: #0f1628;
+    color: #f5f7ff;
+    border-color: rgba(245, 247, 255, 0.4);
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.35);
+}
+
+mark {
+    background: #fff3a6;
+    color: #111;
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-indent: 0;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+    background: #fffefb;
+    border: 0.1rem solid #05060b;
+}
+
+caption {
+    caption-side: top;
+    text-align: left;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6e758f;
+    margin-bottom: 0.5rem;
+}
+
+th,
+td {
+    padding: 0.85rem 1rem;
+    border-bottom: 0.1rem solid rgba(5, 6, 11, 0.2);
+    text-align: left;
+    background-color: #fffefb;
+}
+
+thead th {
+    background: #f4f6ff;
+    color: #0f1628;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom-width: 0.15rem;
+}
+
+tfoot th,
+tfoot td {
+    border-top: 0.15rem solid rgba(5, 6, 11, 0.45);
+    font-weight: 600;
+}
+
+tbody tr:nth-child(odd) td {
+    background: rgba(9, 16, 40, 0.04);
+}
+
+tbody tr:last-child td {
+    border-bottom: 0;
+}

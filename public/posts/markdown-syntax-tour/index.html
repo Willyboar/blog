@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+    <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    
+    
+      Markdown Syntax Tour | .Nikolas
+    
+  </title>
+  <meta name="description" content="A mega-post demonstrating Markdown and GFM output" />
+  <meta name="author" content="Nikolas" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+
+  <script defer src="/assets/js/highlight.min.js"></script>
+<script defer src="/assets/js/gleam-highlight.js"></script>
+<script defer src="/assets/js/app.js"></script>
+
+</head>
+
+    <body>
+        <header class="site-header">
+    <hgroup>
+        <h1><a href="/">.Nikolas</a></h1>
+        <p>Hobbyist Dev & Gleam enthusiast</p>
+    </hgroup>
+    
+<nav class="site-menu">
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    
+    <a href="/tags/">Tags</a>
+    
+</nav>
+
+
+</header>
+ <main class="layout layout--single">
+    <article>
+        <header class="post-header">
+            <p class="post-meta">2025-11-21 · Nikolas</p>
+        </header>
+        <h1 id="Markdown-syntax-tour">Markdown syntax tour</h1>
+<p>This document mirrors the Markdown reference at <a href="https://www.markdownguide.org">https://www.markdownguide.org</a> so we can see how
+common constructs are rendered inside the theme.</p>
+<h2 id="Inline-formatting">Inline formatting</h2>
+<p><em>Italic</em>, <strong>strong</strong>, <em><strong>strong italic</strong></em>, <code>inline code</code>, <del>strikethrough</del>, and
+<ins>inserted text</ins> using raw HTML. Escape sequence: <code>\*</code> literally shows
+an asterisk.</p>
+<h2 id="Links--images">Links &amp; images</h2>
+<p>Link styles: <a href="https://commonmark.org">inline link</a> or reference-style <a href="https://commonmark.org/help/">docs</a>.</p>
+<p><img src="https://commonmark.org/help/images/favicon.png" alt="Markdown logo" /></p>
+<h2 id="Lists">Lists</h2>
+<ul>
+<li>Bullet one</li>
+<li>Bullet two
+<ul>
+<li>Nested bullet
+<ol>
+<li>Ordered inside
+2. Still works</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox" /> Task unchecked</li>
+<li><input checked="" disabled="" type="checkbox" /> Task checked</li>
+</ul>
+<ol>
+<li>Ordered list entry</li>
+<li>Another entry</li>
+<li>And a third</li>
+</ol>
+<h2 id="Blockquotes">Blockquotes</h2>
+<blockquote>
+<p>Block quotes can contain paragraphs, <strong>inline styles</strong>, and nested lists.</p>
+<blockquote>
+<p>A nested quote feels nice too.</p>
+</blockquote>
+</blockquote>
+<h2 id="Footnotes">Footnotes</h2>
+<p>Markdown handles footnotes<sup class="footnote-ref"><a id="fnref:1" href="#fn:1" data-footnote-ref aria-described-by="footnotes">1</a></sup> inline, great for references.[^ref]</p>
+<h2 id="Code-blocks">Code blocks</h2>
+<pre><code class="language-gleam">pub fn main() {
+  io.println(&quot;Hello from Markdown fenced code!&quot;)
+}
+</code></pre>
+<p>Indented code works too:</p>
+<pre><code>touch src/app.gleam
+gleam test
+</code></pre>
+<h2 id="Tables">Tables</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inline code</td>
+<td>✅</td>
+<td>Backticks everywhere.</td>
+</tr>
+<tr>
+<td>Task lists</td>
+<td>✅</td>
+<td>Syntax uses <code>[ ]</code> and <code>[x]</code>.</td>
+</tr>
+<tr>
+<td>Footnotes</td>
+<td>✅</td>
+<td>Great for citations.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Thematic-breaks">Thematic breaks</h2>
+<hr />
+<h2 id="Final-paragraph">Final paragraph</h2>
+<p>If something renders oddly, tweak the theme knowing every major Markdown feature is
+represented here.</p>
+<section class="footnotes" data-footnotes><ol data-footnotes>
+<li id="fnref:1"><p>Rendered at the bottom with backlinks.
+[^ref]: This one proves multiple notes work.</p>
+</li></ol></section> 
+        <section class="post-tags">
+            <div class="tag-list">
+                
+                <a href="/tags/docs/">docs</a>
+                
+                <a href="/tags/markdown/">markdown</a>
+                
+                <a href="/tags/syntax/">syntax</a>
+                
+            </div>
+        </section>
+        
+    </article>
+</main>
+ <footer>
+    <div class="footer-icons">
+        <a href="https://github.com/Willyboar"
+            ><img src="/github-brands-solid-full.svg" alt="GitHub"
+        /></a>
+        <a href="https://bsky.app/profile/willyboar.bsky.social"
+            ><img src="/bluesky-brands-solid-full.svg" alt="Bluesky"
+        /></a>
+    </div>
+    <p>&copy; 2025 · Nikolas</p>
+</footer>
+
+    </body>
+</html>

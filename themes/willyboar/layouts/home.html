@@ -1,0 +1,24 @@
+<main class="layout layout--list">
+    {{#if has_body}}
+    <section class="page-content">{{body}}</section>
+    {{/if}}
+
+    <section class="post-list">
+        {{#each pages}} {{>_partials/post_card .}} {{/each}}
+    </section>
+
+    {{#if pagination.has_pages}}
+    <nav class="pagination">
+        {{#if pagination.has_previous}}
+        <a href="{{pagination.previous}}">&larr;</a>
+        {{/if}}
+        <span
+            >Page {{pagination.current_page}} of
+            {{pagination.total_pages}}</span
+        >
+        {{#if pagination.has_next}}
+        <a href="{{pagination.next}}">&rarr;</a>
+        {{/if}}
+    </nav>
+    {{/if}}
+</main>

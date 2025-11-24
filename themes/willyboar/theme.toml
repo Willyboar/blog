@@ -1,0 +1,25 @@
+# Theme name
+name = "willyboar"
+# License
+license = "MIT"
+
+# Description
+description = "Theme for Nikolas personal blog"
+
+# Version
+version = "0.1.0"
+
+# Theme Link
+src = "https://example.com/themes/willyboar"
+
+# Theme tags
+tags = ["blog", "tags", "responsive"]
+
+# Theme features
+features = ["pagination", "tags", "partials"]
+
+# Theme author
+[author]
+  name = "Nikolaos"
+  homepage = "https://example.com"
+  email = "foundation@willyboar.com"
