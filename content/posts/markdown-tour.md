@@ -3,7 +3,7 @@ title = "Markdown Syntax Tour"
 description = "A mega-post demonstrating Markdown and GFM output"
 date = "2025-11-21"
 tags = ["docs", "markdown", "syntax"]
-draft = true
+draft = false
 ---
 
 # Markdown syntax tour
