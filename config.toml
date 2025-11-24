@@ -11,7 +11,7 @@ description = "Hobbyist Dev & Gleam enthusiast"
 author = "Nikolas"
 
 # Base URL of the Site/Blog
-baseUrl = "/"
+baseUrl = ""
 
 # The Directory where static files will be generated for deployment
 # Default: "public" if not defined
