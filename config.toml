@@ -11,7 +11,7 @@ description = "Hobbyist Dev & Gleam enthusiast"
 author = "Nikolas"
 
 # Base URL of the Site/Blog
-baseUrl = ""
+baseUrl = "blog/"
 
 # The Directory where static files will be generated for deployment
 # Default: "public" if not defined
@@ -32,15 +32,15 @@ theme = "willyboar"
 [menus]
   [[menus.main]]
     name = "Home"
-    pageRef = "/"
+    pageRef = "blog/"
     weight = 10
 
   [[menus.main]]
     name = "About"
-    pageRef = "/about"
+    pageRef = "blog/about"
     weight = 20
 
   [[menus.main]]
     name = "Tags"
-    pageRef = "/tags/"
+    pageRef = "blog/tags/"
     weight = 30
