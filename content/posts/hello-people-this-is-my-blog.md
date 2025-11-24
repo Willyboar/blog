@@ -1,6 +1,6 @@
 ---
 title = "Hello People This Is My Blog"
-description = "Short summary of the page"
+description = "A Start point of my stories."
 date = "2025-11-24"
 draft = false
 tags = ["gleam", "programming", "webdev"]
@@ -46,7 +46,7 @@ Another feature I wanted was to easily change and create themes. Tale has a spec
 tale new theme my_theme
 ```
 
-A brand new theme based on the default is created. You can configure the theme.toml file as you want, change CSS, load CSS frameworks, add JS libraries like highlight.js, change templates, etc. You can also publish your themes on a git host and let others use it! It's simple: copy the theme inside your `themes/ directory` of your site and edit the config.toml to point to your theme. The sky is your limit.
+A brand new theme based on the default is created. You can configure the theme.toml file as you want, change CSS, load CSS frameworks, add JS libraries like highlight.js, change templates, etc. You can also publish your themes on a git host and let others use it! It's simple: copy the theme inside your `themes/ directory` of your site and edit the `config.toml` to point to your theme. The sky is your limit.
 
 ## How can I put my site online?
 
