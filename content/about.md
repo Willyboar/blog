@@ -1,12 +1,8 @@
 ---
 title = "About"
-description = "Learn more about this prototype"
+description = "Learn about me"
 ---
 
-## About This Site
+## A few things about me :)
 
-This site demonstrates:
-
-- TOML frontmatter parsing via `tom`
-- Markdown to HTML rendering through `mork`
-- Handles templates with partials and pagination helpers
+Hello! I'm Nikolas (aka willyboar). I am a hobbyist developer that enjoys programming and especially Gleam language.

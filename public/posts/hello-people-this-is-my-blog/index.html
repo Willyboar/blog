@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+    <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    
+    
+      Hello People This Is My Blog | .Nikolas
+    
+  </title>
+  <meta name="description" content="Short summary of the page" />
+  <meta name="author" content="Nikolas" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+
+  <script defer src="/assets/js/highlight.min.js"></script>
+<script defer src="/assets/js/gleam-highlight.js"></script>
+<script defer src="/assets/js/app.js"></script>
+
+</head>
+
+    <body>
+        <header class="site-header">
+    <hgroup>
+        <h1>
+            <a href="/">.Nikolas</a>
+        </h1>
+        <p>Hobbyist Dev & Gleam enthusiast</p>
+    </hgroup>
+    
+<nav class="site-menu">
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    
+    <a href="/tags/">Tags</a>
+    
+</nav>
+
+
+</header>
+ <main class="layout layout--single">
+    <article>
+        <header class="post-header">
+            <p class="post-meta">2025-11-24 · Nikolas</p>
+        </header>
+        <h1 id="Hello-people">Hello people!</h1>
+<p>I guess the time has come for me to start blogging, or at least try to. So in the past few weeks, I started considering and searching for my options. I wanted a very minimal blog and, of course, for it to be static.</p>
+<p>There are hundreds of static site generators out there, from popular solutions to unknown projects hidden in various git hosting platforms. I experimented a little with a few of them, but then I thought: why not build my own? Probably a lot of people thought the same—that's why there are so many solutions. So I decided to write one in the beloved Gleam!</p>
+<p>After a couple of weeks, <strong>Tale</strong> was born, and this blog was created with it.</p>
+<p>You can check it here: <a href="https://github.com/Willyboar/tale">Tale</a></p>
+<h2 id="What-about-Tale">What about Tale?</h2>
+<p>I wanted a static site generator with a CLI that creates a site as fast as possible. With one command:</p>
+<pre><code class="language-bash">tale new site name
+</code></pre>
+<p>And voilà! Site created, with the default theme in the themes directory and a placeholder post. You just need to configure some details in the <code>config.toml</code> file, and you are ready to serve your site/blog with a simple command:</p>
+<pre><code class="language-bash">tale serve
+</code></pre>
+<p>Visit <a href="https://localhost:8000">localhost</a> and you can see your blog/site.</p>
+<p>Or you can point it to serve on a specific port:</p>
+<pre><code class="language-bash">tale serve 8005
+</code></pre>
+<blockquote>
+<p>The server is pretty basic but has a simple watch feature that rebuilds the site when it detects a change. It still requires reloading the browser, though.</p>
+</blockquote>
+<p>Another feature I wanted was to easily change and create themes. Tale has a special command:</p>
+<pre><code class="language-bash">tale new theme my_theme
+</code></pre>
+<p>A brand new theme based on the default is created. You can configure the theme.toml file as you want, change CSS, load CSS frameworks, add JS libraries like highlight.js, change templates, etc. You can also publish your themes on a git host and let others use it! It's simple: copy the theme inside your <code>themes/ directory</code> of your site and edit the config.toml to point to your theme. The sky is your limit.</p>
+<h2 id="How-can-I-put-my-site-online">How can I put my site online?</h2>
+<p>There are a lot of options to deploy your site online. Some famous ones are GitHub Pages and Netlify, and you can do it for free on both of them.</p>
+<p>Personally i used netlify to host this site. I didn't mess with automatic builds. I just pointed a github repo containing my site, configure to deploy the public folder and i was ready.</p>
+<h2 id="Whats-next">What's next?</h2>
+<p>There are a few projects I have in my mind. I wanted that blog to mostly write about projects I will create in the future.</p>
+<p>The next project I will work on is an <strong>error tracker</strong> in Gleam!</p>
+<p>I hope I will start this project soon. Goodbye until next time!</p>
+ 
+        <section class="post-tags">
+            <div class="tag-list">
+                
+                <a href="/tags/gleam/">gleam</a>
+                
+                <a href="/tags/programming/">programming</a>
+                
+                <a href="/tags/webdev/">webdev</a>
+                
+            </div>
+        </section>
+        
+    </article>
+</main>
+ <footer>
+    <div class="footer-icons">
+        <a href="https://github.com/Willyboar"
+            ><img src="/github-brands-solid-full.svg" alt="GitHub"
+        /></a>
+        <a href="https://bsky.app/profile/willyboar.bsky.social"
+            ><img src="/bluesky-brands-solid-full.svg" alt="Bluesky"
+        /></a>
+    </div>
+    <p>&copy; 2025 · Nikolas</p>
+</footer>
+
+    </body>
+</html>
