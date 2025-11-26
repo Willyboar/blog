@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+    <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    
+    
+      Nuttracker Cracking Errors (Vol.2) | .Nikolas
+    
+  </title>
+  <meta name="description" content="Create a test wisp app and start erlang logger" />
+  <meta name="author" content="Nikolas" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+
+  <script defer src="/assets/js/highlight.min.js"></script>
+<script defer src="/assets/js/gleam-highlight.js"></script>
+<script defer src="/assets/js/app.js"></script>
+
+</head>
+
+    <body>
+        <header class="site-header">
+    <hgroup>
+        <h1>
+            <a href="/">.Nikolas</a>
+        </h1>
+        <p>Hobbyist Dev & Gleam enthusiast</p>
+    </hgroup>
+    
+<nav class="site-menu">
+    
+    <a href="/">Home</a>
+    
+    <a href="/about">About</a>
+    
+    <a href="/tags/">Tags</a>
+    
+</nav>
+
+
+</header>
+ <main class="layout layout--single">
+    <article>
+        <header class="post-header">
+            <p class="post-meta">2025-11-26 · Nikolas</p>
+        </header>
+        <h1 id="Nuttracker-Cracking-errors-Vol2">Nuttracker: Cracking errors (Vol.2)</h1>
+<p>Now that we made clear what we want to create let's move on to the implementation.</p>
+<p>The first step is to create an app with some intentional errors to test our logger. We will create a wisp application with some errors in specific routes:</p>
+<blockquote>
+<p>This articles is not a tutorial but mostly a cover on the implementation of the logger and the error tracker.</p>
+</blockquote>
+<p><code>wisp_app.gleam:</code></p>
+<pre><code class="language-gleam">import gleam/erlang/process
+import gleam/int
+import mist
+import wisp.{type Request, type Response}
+import wisp/wisp_mist
+
+pub fn main() {
+  let secret_key_base = wisp.random_string(64)
+
+  let assert Ok(_) =
+    wisp_mist.handler(handle_request, secret_key_base)
+    |&gt; mist.new
+    |&gt; mist.port(8000)
+    |&gt; mist.start
+  process.sleep_forever()
+}
+
+fn handle_request(req: Request) -&gt; Response {
+  use _req &lt;- middleware(req)
+
+  case wisp.path_segments(req) {
+    [] -&gt; home_page()
+    [&quot;panic&quot;] -&gt; panic_error()
+    [&quot;assert&quot;] -&gt; assert_error()
+    [&quot;list_error&quot;] -&gt; list_error()
+    [&quot;timeout&quot;] -&gt; timeout_error()
+    _ -&gt; not_found()
+  }
+}
+
+fn middleware(req: Request, handle_request: fn(Request) -&gt; Response) -&gt; Response {
+  let req = wisp.method_override(req)
+  use &lt;- wisp.rescue_crashes
+  use req &lt;- wisp.handle_head(req)
+  use req &lt;- wisp.csrf_known_header_protection(req)
+
+  handle_request(req)
+}
+</code></pre>
+<p>We created the functions <code>panic_error</code>, <code>assert_error</code>, <code>list_error</code>, <code>timeout_error</code>, and <code>not_found</code>.</p>
+<pre><code class="language-gleam">fn panic_error() -&gt; Response {
+  panic as &quot;This is a deliberate panic for testing!&quot;
+}
+
+fn assert_error() -&gt; Response {
+  let assert Ok(value) = Error(&quot;Assertion failed!&quot;)
+  let response_text = &quot;Value: &quot; &lt;&gt; int.to_string(value)
+  wisp.ok()
+  |&gt; wisp.string_body(response_text)
+}
+
+fn list_error() -&gt; Response {
+  let empty_list = []
+  let assert [first, ..] = empty_list
+
+  wisp.ok()
+  |&gt; wisp.string_body(&quot;First element: &quot; &lt;&gt; int.to_string(first))
+}
+
+fn timeout_error() -&gt; Response {
+  let subject = process.new_subject()
+
+  let assert Ok(_) = process.receive(subject, 1)
+
+  wisp.ok()
+  |&gt; wisp.string_body(&quot;This should never be reached&quot;)
+}
+
+fn not_found() -&gt; Response {
+  wisp.not_found()
+}
+</code></pre>
+<p>and a basic html front end to <code>home_page</code> to trigger the errors:</p>
+<pre><code class="language-gleam">fn home_page() -&gt; Response {
+  let html =
+    &quot;
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;title&gt;Error Test App&lt;/title&gt;
+        &lt;style&gt;
+          body {
+            font-family: system-ui, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+          }
+          h1 { color: #333; }
+          ul { list-style: none; padding: 0; }
+          li {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+          }
+          a {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: bold;
+          }
+          a:hover { text-decoration: underline; }
+          code {
+            background: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+          }
+        &lt;/style&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;h1&gt;Nuttracker Error Test Application&lt;/h1&gt;
+        &lt;p&gt;Click any link below to trigger different types of errors:&lt;/p&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=\&quot;/panic\&quot;&gt;Panic Error&lt;/a&gt; - &lt;code&gt;panic&lt;/code&gt; statement&lt;/li&gt;
+          &lt;li&gt;&lt;a href=\&quot;/assert\&quot;&gt;Assert Error&lt;/a&gt; - &lt;code&gt;let assert&lt;/code&gt; failure&lt;/li&gt;
+          &lt;li&gt;&lt;a href=\&quot;/list_error\&quot;&gt;List Error&lt;/a&gt; - List operation failure&lt;/li&gt;
+          &lt;li&gt;&lt;a href=\&quot;/timeout\&quot;&gt;Timeout Error&lt;/a&gt; - Process timeout&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;&lt;em&gt;These errors are intentional for testing the error tracker!&lt;/em&gt;&lt;/p&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  &quot;
+
+  wisp.html_response(html, 200)
+}
+</code></pre>
+<p>We didn't use wisp logger as we want to implement our own.
+Now when we get an error we get info for the <strong>BEAM</strong> default logger.</p>
+<p><strong>BEAM</strong> default logger output looks like this:</p>
+<pre><code>=ERROR REPORT==== 26-Nov-2025::20:55:09.538682 ===
+    function: &lt;&lt;&quot;timeout_error&quot;&gt;&gt;
+    line: 116
+    message: &lt;&lt;&quot;Pattern match failed, no pattern matched the value.&quot;&gt;&gt;
+    module: &lt;&lt;&quot;wisp_app&quot;&gt;&gt;
+    start: 3001
+    value: {error,nil}
+    file: &lt;&lt;&quot;src/wisp_app.gleam&quot;&gt;&gt;
+    'end': 3047
+    gleam_error: let_assert
+    pattern_end: 3017
+    pattern_start: 3012
+    class: errored
+</code></pre>
+<p>Not bad for default but we need more info and be able to process the data. We can add more details to the error report by implementing our own logger.</p>
+<p>So let's start:</p>
+<p>We will create an erlang file.
+<code>nuttracker_logger.erl:</code></p>
+<pre><code class="language-erlang">-module(nuttracker_logger_handler).
+-behaviour(logger_handler).
+
+%% logger_handler callbacks
+-export([log/2, adding_handler/1, removing_handler/1, changing_config/3]).
+
+%% API
+-export([install/0, uninstall/0]).
+
+-define(HANDLER_ID, nuttracker_handler).
+
+%% API Functions
+
+install() -&gt;
+    Config = #{
+        level =&gt; all,
+        filter_default =&gt; log,
+        filters =&gt; []
+    },
+    case logger:add_handler(?HANDLER_ID, ?MODULE, Config) of
+        ok -&gt;
+            {ok, &lt;&lt;&quot;NutTracker logger handler installed&quot;&gt;&gt;};
+        {error, {already_exist, _}} -&gt;
+            {ok, &lt;&lt;&quot;NutTracker logger handler already installed&quot;&gt;&gt;};
+        {error, Reason} -&gt;
+            {error, term_to_binary(Reason)}
+    end.
+
+uninstall() -&gt;
+    case logger:remove_handler(?HANDLER_ID) of
+        ok -&gt;
+            {ok, &lt;&lt;&quot;NutTracker logger handler removed&quot;&gt;&gt;};
+        {error, {not_found, _}} -&gt;
+            {ok, &lt;&lt;&quot;NutTracker logger handler not found&quot;&gt;&gt;};
+        {error, Reason} -&gt;
+            {error, term_to_binary(Reason)}
+    end.
+
+%% logger_handler Callbacks
+
+adding_handler(Config) -&gt;
+    {ok, Config}.
+
+removing_handler(_Config) -&gt;
+    ok.
+
+changing_config(_SetOrUpdate, _OldConfig, NewConfig) -&gt;
+    {ok, NewConfig}.
+
+log(LogEvent, _Config) -&gt;
+    io:format(&quot;~p~n&quot;, [LogEvent]),
+    ok.
+</code></pre>
+<p>Here is our prototype logger handler.</p>
+<p>It's pretty simple for now, but we can expand it to include more features and customization options in the future.</p>
+<p>Now let's create a gleam wrapper for our logger handler.</p>
+<p><code>nuttracker.gleam:</code></p>
+<pre><code class="language-gleam">import gleam/option.{type Option}
+
+/// Represents the log level of an error event
+pub type LogLevel {
+  Emergency
+  Alert
+  Critical
+  Error
+  Warning
+  Notice
+  Info
+  Debug
+}
+
+/// Represents the type of Gleam error
+pub type GleamErrorType {
+  Panic
+  LetAssert
+  Todo
+  Other(String)
+}
+
+/// Represents the error class
+pub type ErrorClass {
+  Errored
+  Exit
+  Throw
+  UnknownClass
+}
+
+/// Represents a captured error event with all available metadata
+pub type ErrorEvent {
+  ErrorEvent(
+    level: LogLevel,
+    message: String,
+    module: Option(String),
+    function: Option(String),
+    file: Option(String),
+    line: Option(Int),
+    pid: Option(String),
+    time: Option(Int),
+    gleam_error: Option(GleamErrorType),
+    error_class: Option(ErrorClass),
+    error_reason: Option(String),
+    error_value: Option(String),
+    start_pos: Option(Int),
+    end_pos: Option(Int),
+    pattern_start: Option(Int),
+    pattern_end: Option(Int),
+  )
+}
+
+/// Install the NutTracker logger handler
+/// Returns Ok with success message or Error if installation fails
+pub fn install() -&gt; Result(String, String) {
+  do_install()
+}
+
+/// Uninstall the NutTracker logger handler
+/// Returns Ok with success message or Error if removal fails
+pub fn uninstall() -&gt; Result(String, String) {
+  do_uninstall()
+}
+
+// FFI functions
+@external(erlang, &quot;nuttracker_logger_handler&quot;, &quot;install&quot;)
+fn do_install() -&gt; Result(String, String)
+
+@external(erlang, &quot;nuttracker_logger_handler&quot;, &quot;uninstall&quot;)
+fn do_uninstall() -&gt; Result(String, String)
+</code></pre>
+<p>What we did in gleam wrapper:</p>
+<ul>
+<li>Created a <code>ErrorEvent</code> struct to represent a captured error event with all available metadata.</li>
+<li>Implemented <code>install</code> and <code>uninstall</code> functions to install and uninstall the NutTracker logger handler.</li>
+<li>Defined FFI functions for installing and uninstalling the logger handler.</li>
+</ul>
+<p>Now let's use our logger handler into our wisp app.</p>
+<p>We need to add our library as a local dependency:</p>
+<pre><code class="language-toml">nuttracker = { path = &quot;../nuttracker&quot; }
+</code></pre>
+<p>import it in our wisp app:</p>
+<pre><code class="language-gleam">import nuttracker
+</code></pre>
+<p>and install it with:</p>
+<pre><code class="language-gleam">let _nuttracker = nuttracker.install()
+</code></pre>
+<p>If we start our wisp app and trigger an error we get this output along with the <strong>BEAM</strong> default:</p>
+<pre><code>#{meta =&gt; #{pid =&gt; &lt;0.129.0&gt;,time =&gt; 1764185331564691,gl =&gt; &lt;0.69.0&gt;},
+  msg =&gt;
+      {report,#{function =&gt; &lt;&lt;&quot;panic_error&quot;&gt;&gt;,line =&gt; 109,
+                message =&gt; &lt;&lt;&quot;This is a deliberate panic for testing!&quot;&gt;&gt;,
+                module =&gt; &lt;&lt;&quot;wisp_app&quot;&gt;&gt;,file =&gt; &lt;&lt;&quot;src/wisp_app.gleam&quot;&gt;&gt;,
+                gleam_error =&gt; panic,class =&gt; errored}},
+  level =&gt; error}
+</code></pre>
+<p>It's almost identical with the <strong>BEAM</strong> default. The difference is now the data are stored in an erlang map so we are able to access them, manipulate them, store them to a database and generally use them depending on our needs.</p>
+<p>In the next post we will parse the event and normalize it into Gleam types.</p>
+ 
+        <section class="post-tags">
+            <div class="tag-list">
+                
+                <a href="/tags/gleam/">gleam</a>
+                
+                <a href="/tags/programming/">programming</a>
+                
+                <a href="/tags/tools/">tools</a>
+                
+                <a href="/tags/nuttracker/">nuttracker</a>
+                
+            </div>
+        </section>
+        
+    </article>
+</main>
+ <footer>
+    <div class="footer-icons">
+        <a href="https://github.com/Willyboar"
+            ><img src="/github-brands-solid-full.svg" alt="GitHub"
+        /></a>
+        <a href="https://bsky.app/profile/willyboar.bsky.social"
+            ><img src="/bluesky-brands-solid-full.svg" alt="Bluesky"
+        /></a>
+    </div>
+    <p>&copy; 2025 · Nikolas</p>
+</footer>
+
+    </body>
+</html>
